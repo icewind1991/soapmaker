@@ -24,6 +24,8 @@ export function MarkDot({mark, mapBoundary, targetSize, scale}: PlayerProp) {
 
 	return <g
 		transform={`translate(${scaledX} ${scaledY}) scale(${1 / scale})`}>
+		<polygon points="-6,14 0, 16 6,14 0,24" fill="white"
+				 transform={`rotate(${270 - mark.angle})`}/>
 		<circle r={16} strokeWidth={1} stroke="white" fill={teamColor}/>
 	</g>;
 }

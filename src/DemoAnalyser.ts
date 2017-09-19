@@ -17,8 +17,6 @@ export function analyseDemo(buffer: ArrayBuffer): DemoResult {
 	const parser = demo.getParser();
 	const header = parser.readHeader();
 
-	console.log(header);
-
 	const match = parser.match;
 
 	const marks: Mark[] = [];
@@ -35,7 +33,7 @@ export function analyseDemo(buffer: ArrayBuffer): DemoResult {
 				marks.push({
 					tick: match.tick,
 					position: new Vector(player.position.x, player.position.y, player.position.z),
-					angle: player.viewAngle
+					angle: parser['viewAngles'][0][1]
 				});
 			}
 		}
