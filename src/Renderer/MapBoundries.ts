@@ -268,10 +268,21 @@ const overWriteMapBoundaries = {
 			"x": 1714,
 			"y": 3735
 		}
+	},
+	'koth_coalplant_b8': {
+		"boundaryMin": {
+			"x": -1513,
+			"y": -4089
+		},
+		"boundaryMax": {
+			"x": 1527,
+			"y": 4083
+		}
 	}
 };
 
 overWriteMapBoundaries['koth_viaduct'] = overWriteMapBoundaries['koth_product_rc8'];
+overWriteMapBoundaries['koth_coalplant_b8'] = overWriteMapBoundaries['koth_ashville_rc1'];
 
 export function findMapAlias(map) {
     if (overWriteMapBoundaries[map]) {
