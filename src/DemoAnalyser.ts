@@ -1,4 +1,6 @@
-import {Demo, Packet, Vector} from 'tf2-demo/build/es6';
+import {Demo, Vector} from '@demostf/demo.js';
+import {MessageType} from '@demostf/demo.js/build/Data/Message';
+import {Player} from '@demostf/demo.js/build/Data/Player';
 
 export interface Mark {
 	tick: number;
@@ -14,32 +16,31 @@ export interface DemoResult {
 export function analyseDemo(buffer: ArrayBuffer): DemoResult {
 	const demo = new Demo(buffer);
 
-	const parser = demo.getParser();
-	const header = parser.readHeader();
+	const analyser = demo.getAnalyser();
+	const header = analyser.getHeader();
 
-	const match = parser.match;
+	const match = analyser.match;
 
 	const marks: Mark[] = [];
 
-	parser.on('packet', (packet: Packet) => {
-		if (packet.packetType === 'consoleCmd') {
+	for (const message of analyser.getMessages()) {
+		if (message.type === MessageType.ConsoleCmd) {
 			// attack is the mark command
-			if (packet.command.substr(0, 7) === '+attack') {
-				const player = match.players.find(player => player.user.name === header.nick);
+			if (message.command.substr(0, 7) === '+attack') {
+				const players: Player[] = Array.from(match.playerEntityMap.values());
+				const player = players.find(player => player.user.name === header.nick);
 				if (!player) {
-					console.log(match.players);
+					console.log(players, match.playerEntityMap);
 					throw new Error('Cant find valid player in demo');
 				}
 				marks.push({
 					tick: match.tick,
 					position: new Vector(player.position.x, player.position.y, player.position.z),
-					angle: parser['viewAngles'][0][1]
+					angle: player.viewAngle
 				});
 			}
 		}
-	});
-
-	parser.parseBody();
+	}
 
 	return {
 		map: header.map,
