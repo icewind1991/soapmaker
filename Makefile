@@ -1,5 +1,9 @@
 all: build
 
+.PHONY: leveloverview
+leveloverview:
+	$(MAKE) -C src/images/leveloverview
+
 .PHONY: clean
 clean:
 	rm -rf dist
@@ -11,7 +15,7 @@ node_modules: package.json
 sources=$(wildcard js/*) $(wildcard js/*/*) $(wildcard css/*/*)  $(wildcard css/*)
 
 .PHONY: build
-build: node_modules $(sources)
+build: node_modules $(sources) leveloverview
 	node node_modules/.bin/webpack --colors --display-error-details --config webpack.prod.config.js
 
 build/js/main.js: build
