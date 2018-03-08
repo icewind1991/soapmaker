@@ -278,6 +278,16 @@ const overWriteMapBoundaries = {
 			"x": 1527,
 			"y": 4083
 		}
+	},
+	'koth_ramjam_rc1': {
+		"boundaryMin": {
+			"x": -3464,
+			"y": -1865
+		},
+		"boundaryMax": {
+			"x": 3464,
+			"y": 1851
+		}
 	}
 };
 
